@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './trivia.png';
 import './App.css';
-import {getToken, getQuestions} from './services/api';
-import getImageUrl from './services/gravatar';
+// import {  getToken, getQuestions } from './services/api';
+// import getImageUrl from './services/gravatar';
 
 export default function App() {
   return (

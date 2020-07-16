@@ -12,7 +12,7 @@ class Home extends React.Component {
     this.token = this.token.bind(this);
   }
 
-  token() {
+  static token() {
     getToken().then((value) => {
       localStorage.setItem('@trivia-game/token', value);
     });

@@ -38,10 +38,10 @@ class Home extends React.Component {
         <label htmlFor="mail" >
           E-mail do Gravatar:
           <input
-            id="mail" type="mail" data-testid="input-gravatar-email" placeholder="Digite o seu e-mail"
+            id="mail" type="mail" data-testid="input-gravatar-email" placeholder="E-mail"
           />
         </label>
-        <label htmlFor ="name">
+        <label htmlFor="name">
           Nome do Jogador:
           <input
             id="name"
@@ -54,12 +54,7 @@ class Home extends React.Component {
           Jogar!
         </button>
         <button data-testeid="btn-settings" onClick={this.settings}>
-          <img
-            src="https://image.freepik.com/vetores-gratis/ilustracao-de-engrenagem-doodle-icone_53876-5596.jpg"
-            alt="gear picture"
-            width="20"
-            height="20"
-          />
+          Configurações
         </button>
       </form>
     );

@@ -12,7 +12,7 @@ class Home extends React.Component {
   }
 
   settings() {
-    alert('tela de config');
+    this.alert('tela de config');
   }
 
   handleChange() {
@@ -29,23 +29,26 @@ class Home extends React.Component {
   }
 
   play() {
-    alert('tela de jogo');
+    this.alert('tela de jogo');
   }
 
   render() {
     return (
-      <div>
-        <label>
+      <form>
+        <label htmlFor="mail" >
           E-mail do Gravatar:
           <input
-          type="mail" data-testid="input-gravatar-email" placeholder="Digite o seu e-mail" />
+            id="mail" type="mail" data-testid="input-gravatar-email" placeholder="Digite o seu e-mail"
+          />
         </label>
-        <label>
+        <label htmlFor ="name">
           Nome do Jogador:
           <input
+            id="name"
             data-testid="input-player-name"
             placeholder="Digite o seu nome"
-            onChange={this.handleChange} />
+            onChange={this.handleChange}
+          />
         </label>
         <button data-testid="btn-play" disabled={this.state.disabled} onClick={this.play}>
           Jogar!
@@ -58,7 +61,7 @@ class Home extends React.Component {
             height="20"
           />
         </button>
-      </div>
+      </form>
     );
   }
 }

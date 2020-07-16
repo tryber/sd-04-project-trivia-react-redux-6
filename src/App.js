@@ -13,11 +13,11 @@ import Settings from './pages/Settings';
 export default function App() {
   return (
     <BrowserRouter>
-      <Route exact path="/a" component={Home} />
+      <Route exact path="/" component={Home} />
       <Route exact path="/play" component={Game} />
       <Route exact path="/results" component={Feedback} />
       <Route exact path="/ranking" component={Ranking} />
-      <Route exact path="/" component={Settings} />
+      <Route exact path="/settings" component={Settings} />
     </BrowserRouter>
   );
 }

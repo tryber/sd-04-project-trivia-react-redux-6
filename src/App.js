@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // import logo from './trivia.png';
 import './App.css';
 import Home from './pages/Home';
@@ -13,11 +13,13 @@ import Settings from './pages/Settings';
 export default function App() {
   return (
     <BrowserRouter>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/play" component={Game} />
-      <Route exact path="/results" component={Feedback} />
-      <Route exact path="/ranking" component={Ranking} />
-      <Route exact path="/settings" component={Settings} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/play" component={Game} />
+        <Route exact path="/results" component={Feedback} />
+        <Route exact path="/ranking" component={Ranking} />
+        <Route exact path="/settings" component={Settings} />
+      </Switch>
     </BrowserRouter>
   );
 }

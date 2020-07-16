@@ -14,7 +14,6 @@ class Home extends React.Component {
       disabled: true,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.token = this.token.bind(this);
   }
 
   handleChange() {

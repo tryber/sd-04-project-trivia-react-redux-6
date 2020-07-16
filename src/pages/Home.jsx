@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class Home extends React.Component {
   constructor() {
@@ -11,8 +11,12 @@ class Home extends React.Component {
     this.play = this.play.bind(this);
   }
 
+  settings() {
+    alert('tela de config');
+  }
+
   handleChange() {
-    const inp = document.querySelector("input");
+    const inp = document.querySelector('input');
     if (inp.value.length >= 3) {
       this.setState({
         disabled: false,
@@ -22,44 +26,39 @@ class Home extends React.Component {
         disabled: true,
       });
     }
-  };
-
-  settings() {
-    alert("tela de config");
-  };
+  }
 
   play() {
-    alert("tela de jogo")
+    alert('tela de jogo');
   }
 
   render() {
     return (
-      <form>
+      <div>
         <label>
           E-mail do Gravatar:
-          <input type="mail" data-testid="input-gravatar-email" placeholder="Digite o seu e-mail"
-          ></input>
+          <input
+          type="mail" data-testid="input-gravatar-email" placeholder="Digite o seu e-mail" />
         </label>
         <label>
           Nome do Jogador:
           <input
             data-testid="input-player-name"
             placeholder="Digite o seu nome"
-            onChange={this.handleChange}
-          ></input>
+            onChange={this.handleChange} />
         </label>
         <button data-testid="btn-play" disabled={this.state.disabled} onClick={this.play}>
           Jogar!
         </button>
-        <button data-testeid="btn-settings">
+        <button data-testeid="btn-settings" onClick={this.settings}>
           <img
             src="https://image.freepik.com/vetores-gratis/ilustracao-de-engrenagem-doodle-icone_53876-5596.jpg"
+            alt="gear picture"
             width="20"
             height="20"
-            onClick={this.settings}
           />
         </button>
-      </form>
+      </div>
     );
   }
 }

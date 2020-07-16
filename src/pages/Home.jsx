@@ -1,9 +1,12 @@
 import React from "react";
 
 class Home extends React.Component {
-  state = {
-    disabled: true,
-  };
+  constructor() {
+    super();
+    this.state = {
+      disabled: true,
+    };
+  }
 
   handleChange = () => {
     const inp = document.querySelector("input");
@@ -31,18 +34,12 @@ class Home extends React.Component {
       <form>
         <label>
           E-mail do Gravatar:
-          <input
-            id="inp"
-            type="mail"
-            data-testid="input-gravatar-email"
-            placeholder="Digite o seu e-mail"
+          <input type="mail" data-testid="input-gravatar-email" placeholder="Digite o seu e-mail"
           ></input>
         </label>
         <label>
           Nome do Jogador:
           <input
-            id="inp2"
-            type="text"
             data-testid="input-player-name"
             placeholder="Digite o seu nome"
             onChange={this.handleChange}

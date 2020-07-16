@@ -6,7 +6,9 @@ class Home extends React.Component {
     this.state = {
       disabled: true,
     };
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.settings = this.settings.bind(this);
+    this.play = this.play.bind(this);
   }
 
   handleChange() {
@@ -22,11 +24,11 @@ class Home extends React.Component {
     }
   };
 
-  settings = () => {
+  settings() {
     alert("tela de config");
   };
 
-  play = () => {
+  play() {
     alert("tela de jogo")
   }
 

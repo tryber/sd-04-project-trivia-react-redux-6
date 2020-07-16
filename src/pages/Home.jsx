@@ -6,9 +6,10 @@ class Home extends React.Component {
     this.state = {
       disabled: true,
     };
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange = () => {
+  handleChange() {
     const inp = document.querySelector("input");
     if (inp.value.length >= 3) {
       this.setState({

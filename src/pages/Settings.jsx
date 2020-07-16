@@ -22,22 +22,22 @@ export default class Settings extends Component {
     return (
       <form>
         <h1>Configurações</h1>
-        <label htmlFor='categories'>Categoria
+        <label htmlFor="categories">Categoria
           <select>
-            {categories.map((item, id) => (<option key={id} value={item}>{item}</option>))}
+            {categories.map((item) => (<option key={item} value={item}>{item}</option>))}
           </select>
         </label>
-        <label htmlFor='difficulty'>Dificuldade
+        <label htmlFor="difficulty">Dificuldade
           <select>
-            {difficulty.map((item, id) => (<option key={id} value={item}>{item}</option>))}
+            {difficulty.map((item) => (<option key={item} value={item}>{item}</option>))}
           </select>
         </label>
-        <label htmlFor='type'>Tipo
+        <label htmlFor="type">Tipo
           <select>
-            {type.map((item, id) => (<option key={id} value={item}>{item}</option>))}
+            {type.map((item) => (<option key={item} value={item}>{item}</option>))}
           </select>
         </label>
       </form>
-    );  
+    );
   }
 }

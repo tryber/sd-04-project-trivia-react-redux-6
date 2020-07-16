@@ -1,7 +1,7 @@
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
 import { getCategory } from '../services/api';
 
-const difficulty = ['Any Difficulty','easy', 'normal', 'hard'];
+const difficulty = ['Any Difficulty', 'easy', 'normal', 'hard'];
 const type = ['Any Type', 'Multiple Choice', 'True/False'];
 
 export default class Settings extends Component {
@@ -9,33 +9,32 @@ export default class Settings extends Component {
     super(props);
     this.state = {
       categories: [],
-    }
+    };
   }
 
   componentDidMount() {
     getCategory()
       .then((res) => res.map((item) => [item.name]))
-      .then((categories) => this.setState({categories}));
+      .then((categories) => this.setState({ categories }));
   }
-  
   render() {
     const { categories } = this.state;
     return (
-      <form className=''>
+      <form>
         <h1>Configurações</h1>
-        <label>Categoria
+        <label htmlFor='categories'>Categoria
           <select>
-            {categories.map((item, index) =>(<option key={index} value={item}>{item}</option>))}
+            {categories.map((item, id) => (<option key={id} value={item}>{item}</option>))}
           </select>
         </label>
-        <label>Dificuldade
+        <label htmlFor='difficulty'>Dificuldade
           <select>
-            {difficulty.map((item, index) =>(<option key={index} value={item}>{item}</option>))}
+            {difficulty.map((item, id) => (<option key={id} value={item}>{item}</option>))}
           </select>
         </label>
-        <label>Tipo
+        <label htmlFor='type'>Tipo
           <select>
-            {type.map((item, index) =>(<option key={index} value={item}>{item}</option>))}
+            {type.map((item, id) => (<option key={id} value={item}>{item}</option>))}
           </select>
         </label>
       </form>

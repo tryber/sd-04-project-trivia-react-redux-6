@@ -13,21 +13,21 @@ const getQuestions = async (token) => {
 };
 
 const getCategory = async () => {
-  const URL = `https://opentdb.com/api_category.php`;
+  const URL = 'https://opentdb.com/api_category.php';
   const data = await fetch(URL);
   const dataJSON = await data.json();
   return dataJSON.trivia_categories;
 };
 
-const getDifficulty= async () => {
-  const URL = `https://opentdb.com/api_difficulty.php`;
+const getDifficulty = async () => {
+  const URL = 'https://opentdb.com/api_difficulty.php';
   const data = await fetch(URL);
   const dataJSON = await data.json();
   return dataJSON;
 };
 
 const getType = async () => {
-  const URL = `https://opentdb.com/api_type.php`;
+  const URL = 'https://opentdb.com/api_type.php';
   const data = await fetch(URL);
   const dataJSON = await data.json();
   return dataJSON;

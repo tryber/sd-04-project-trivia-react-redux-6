@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function RankingTable(props) {
@@ -33,6 +34,10 @@ function RankingTable(props) {
   );
 }
 
+RankingTable.propTypes = {
+  ranking: PropTypes.arrayOf(PropTypes.object),
+}
+
 export default function Ranking() {
   const [ranking] = useState(() => {
     const rankingLocalStorage = localStorage.getItem('@trivia-game/ranking');
@@ -65,3 +70,4 @@ export default function Ranking() {
     </div>
   );
 }
+

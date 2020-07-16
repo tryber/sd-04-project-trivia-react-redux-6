@@ -35,8 +35,8 @@ function RankingTable(props) {
 }
 
 RankingTable.propTypes = {
-  ranking: PropTypes.arrayOf(PropTypes.object),
-}
+  ranking: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default function Ranking() {
   const [ranking] = useState(() => {

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { getToken } from '../services/api'
 
 class Home extends React.Component {
   constructor() {
@@ -7,12 +9,13 @@ class Home extends React.Component {
       disabled: true,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.settings = this.settings.bind(this);
-    this.play = this.play.bind(this);
+    this.getToken = this.token.bind(this);
   }
 
-  settings() {
-    this.alert('tela de config');
+  token() {
+    getToken().then(value => {
+      localStorage.setItem('@trivia-game/token', value);
+    });
   }
 
   handleChange() {
@@ -26,10 +29,6 @@ class Home extends React.Component {
         disabled: true,
       });
     }
-  }
-
-  play() {
-    this.alert('tela de jogo');
   }
 
   render() {
@@ -50,12 +49,16 @@ class Home extends React.Component {
             onChange={this.handleChange}
           />
         </label>
-        <button data-testid="btn-play" disabled={this.state.disabled} onClick={this.play}>
+        <Link to="/play">
+        <button data-testid="btn-play" disabled={this.state.disabled} onClick={this.token}>
           Jogar!
         </button>
-        <button data-testeid="btn-settings" onClick={this.settings}>
+        </Link>
+        <Link to="/settings">
+        <button data-testeid="btn-settings">
           Configurações
         </button>
+        </Link>
       </form>
     );
   }

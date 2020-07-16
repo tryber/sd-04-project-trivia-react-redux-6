@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import { getToken } from '../services/api';
 
 class Home extends React.Component {
+  static token() {
+    getToken().then((value) => {
+      localStorage.setItem('@trivia-game/token', value);
+    });
+  }
   constructor() {
     super();
     this.state = {
@@ -10,12 +15,6 @@ class Home extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.token = this.token.bind(this);
-  }
-
-  static token() {
-    getToken().then((value) => {
-      localStorage.setItem('@trivia-game/token', value);
-    });
   }
 
   handleChange() {

@@ -9,7 +9,7 @@ export default function Feedback() {
 
   const messageFeedback = (questions) => {
     if (questions >= 3) return <h1 data-testid="feedback-test">Mandou Bem!</h1>;
-      return <h1 data-testid="feedback-test">Podia ser melhor...</h1>;
+    return <h1 data-testid="feedback-test">Podia ser melhor...</h1>;
   };
 
   return (

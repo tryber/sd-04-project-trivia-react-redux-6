@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import getImageUrl from '../services/gravatar';
 
 export default function Header({ player }) {
@@ -23,3 +25,11 @@ export default function Header({ player }) {
     </nav>
   );
 }
+
+Header.propTypes = {
+  player: PropTypes.shape({
+    gravatarEmail: PropTypes.string,
+    name: PropTypes.string,
+    score: PropTypes.number,
+  }).isRequired,
+};

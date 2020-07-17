@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { decode } from 'he';
+import PropTypes from 'prop-types';
+
 import { getQuestions } from '../services/api';
 import Header from '../components/Header';
 
@@ -64,6 +66,24 @@ export default function Game() {
   const [isActive, setIsActive] = useState(true);
   const [timer, setTimer] = useState(30);
 
+  const shuffle = (arr) => {
+    const array = Array.from(arr);
+    let currentIndex = array.length;
+    let temporaryValue = 0;
+    let randomIndex = 0;
+
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  };
+
   useEffect(() => {
     const state = { player };
     localStorage.setItem('state', JSON.stringify(state));
@@ -110,10 +130,10 @@ export default function Game() {
   const handleAnswer = (e) => {
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
-        setPlayer({ ...player, score: player.score + 10 + (timer * 3) });
+        setPlayer({ ...player, score: player.score + 10 + timer * 3 });
       }
       if (questionOnScreen.difficulty === 'medium') {
-        setPlayer({ ...player, score: player.score + 10 + (timer * 2) });
+        setPlayer({ ...player, score: player.score + 10 + timer * 2 });
       }
       if (questionOnScreen.difficulty === 'easy') {
         setPlayer({ ...player, score: player.score + 10 + timer });
@@ -124,24 +144,6 @@ export default function Game() {
 
   const nextQuestion = () => {
     setIndex(index + 1);
-  };
-
-  const shuffle = (arr) => {
-    const array = Array.from(arr);
-    let currentIndex = array.length;
-    let temporaryValue = 0;
-    let randomIndex = 0;
-
-    while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
   };
 
   return (
@@ -177,3 +179,23 @@ export default function Game() {
     </div>
   );
 }
+
+Answers.propTypes = {
+  answers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleAnswer: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  correctAnswer: PropTypes.string.isRequired,
+};
+
+Question.propTypes = {
+  question: PropTypes.shape({
+    question: PropTypes.string,
+    category: PropTypes.string,
+  }),
+  timer: PropTypes.number.isRequired,
+  isActive: PropTypes.bool.isRequired,
+};
+
+Question.defaultProps = {
+  question: { question: '', category: '' },
+};

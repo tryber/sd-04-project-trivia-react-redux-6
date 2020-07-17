@@ -1,6 +1,8 @@
 /* eslint class-methods-use-this: ["off"] */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import { getToken } from '../services/api';
 
 function EmailInput({ email, handleChange }) {
@@ -94,3 +96,13 @@ class Home extends React.Component {
 }
 
 export default Home;
+
+NameInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
+
+EmailInput.propTypes = {
+  email: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};

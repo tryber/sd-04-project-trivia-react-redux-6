@@ -1,7 +1,39 @@
-/*eslint class-methods-use-this: ["off"] */
+/* eslint class-methods-use-this: ["off"] */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../services/api';
+
+function EmailInput({ email, handleChange }) {
+  return (
+    <label htmlFor="mail">
+      E-mail do Gravatar:
+      <input
+        name="email"
+        onChange={(e) => handleChange(e.target.name, e.target.value)}
+        value={email}
+        type="mail"
+        data-testid="input-gravatar-email"
+        placeholder="E-mail"
+      />
+    </label>
+  );
+}
+
+function NameInput({ name, handleChange }) {
+  return (
+    <label htmlFor="name">
+      Nome do Jogador:
+      <input
+        name="name"
+        onChange={(e) => handleChange(e.target.name, e.target.value)}
+        value={name}
+        type="text"
+        data-testid="input-player-name"
+        placeholder="Digite o seu nome"
+      />
+    </label>
+  );
+}
 
 class Home extends React.Component {
   constructor() {
@@ -42,28 +74,8 @@ class Home extends React.Component {
   render() {
     return (
       <form>
-        <label htmlFor="mail">
-          E-mail do Gravatar:
-          <input
-            name="email"
-            onChange={(e) => this.handleChange(e.target.name, e.target.value)}
-            value={this.state.email}
-            type="mail"
-            data-testid="input-gravatar-email"
-            placeholder="E-mail"
-          />
-        </label>
-        <label htmlFor="name">
-          Nome do Jogador:
-          <input
-            name="name"
-            onChange={(e) => this.handleChange(e.target.name, e.target.value)}
-            value={this.state.name}
-            type="text"
-            data-testid="input-player-name"
-            placeholder="Digite o seu nome"
-          />
-        </label>
+        <EmailInput email={this.state.email} handleChange={this.handleChange} />
+        <NameInput name={this.state.name} handleChange={this.handleChange} />
         <Link to="/play">
           <button
             disabled={!(!!this.state.name && !!this.state.email)}

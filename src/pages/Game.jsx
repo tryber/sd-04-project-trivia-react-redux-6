@@ -130,13 +130,19 @@ export default function Game() {
   const handleAnswer = (e) => {
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
-        setPlayer({ ...player, assertions: player.assertions +1, score: player.score + 10 + (timer * 3) });
+        setPlayer({ ...player,
+          assertions: player.assertions + 1,
+          score: player.score + 10 + (timer * 3) });
       }
       if (questionOnScreen.difficulty === 'medium') {
-        setPlayer({ ...player, assertions: player.assertions +1, score: player.score + 10 + (timer * 2) });
+        setPlayer({ ...player,
+          assertions: player.assertions + 1,
+          score: player.score + 10 + (timer * 2) });
       }
       if (questionOnScreen.difficulty === 'easy') {
-        setPlayer({ ...player, assertions: player.assertions +1, score: player.score + 10 + timer });
+        setPlayer({ ...player,
+          assertions: player.assertions + 1,
+          score: player.score + 10 + timer });
       }
     }
     setIsActive(false);

@@ -1,3 +1,4 @@
+/*eslint class-methods-use-this: ["off"] */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../services/api';

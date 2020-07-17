@@ -80,14 +80,15 @@ export default function Game() {
   }, [questionOnScreen]);
 
   useEffect(() => {
+    let t;
     if (timer) {
-      const t = setTimeout(() => {
+      t = setTimeout(() => {
         setTimer(timer - 1);
       }, 1000);
-      return () => clearTimeout(t);
     } else {
       setIsActive(false);
     }
+    return () => clearTimeout(t);
   }, [timer]);
 
   useEffect(() => {
@@ -109,10 +110,10 @@ export default function Game() {
   const handleAnswer = (e) => {
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
-        setPlayer({ ...player, score: player.score + 10 + timer * 3 });
+        setPlayer({ ...player, score: player.score + 10 + (timer * 3) });
       }
       if (questionOnScreen.difficulty === 'medium') {
-        setPlayer({ ...player, score: player.score + 10 + timer * 2 });
+        setPlayer({ ...player, score: player.score + 10 + (timer * 2) });
       }
       if (questionOnScreen.difficulty === 'easy') {
         setPlayer({ ...player, score: player.score + 10 + timer });
@@ -125,12 +126,13 @@ export default function Game() {
     setIndex(index + 1);
   };
 
-  const shuffle = (array) => {
-    var currentIndex = array.length;
-
+  const shuffle = (arr) => {
+    const array = Array.from(arr);
+    let currentIndex = array.length;
     let temporaryValue = 0;
     let randomIndex = 0;
-    while (0 !== currentIndex) {
+
+    while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
 

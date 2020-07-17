@@ -21,7 +21,7 @@ export default class Settings extends Component {
     const { categories } = this.state;
     return (
       <form>
-        <h1>Configurações</h1>
+        <h1 data-testid="settings-title">Configurações</h1>
         <label htmlFor="categories">Categoria
           <select>
             {categories.map((item) => (<option key={item} value={item}>{item}</option>))}

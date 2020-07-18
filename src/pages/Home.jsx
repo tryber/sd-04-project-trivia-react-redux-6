@@ -7,15 +7,16 @@ import { getToken } from '../services/api';
 
 function EmailInput({ email, handleChange }) {
   return (
-    <label htmlFor="mail">
+    <label htmlFor="mail" className="w-100">
       E-mail do Gravatar:
       <input
         name="email"
+        className="form-control"
         onChange={(e) => handleChange(e.target.name, e.target.value)}
         value={email}
         type="mail"
         data-testid="input-gravatar-email"
-        placeholder="E-mail"
+        placeholder="Digite o seu e-mail"
       />
     </label>
   );
@@ -23,10 +24,11 @@ function EmailInput({ email, handleChange }) {
 
 function NameInput({ name, handleChange }) {
   return (
-    <label htmlFor="name">
+    <label htmlFor="name" className="w-100">
       Nome do Jogador:
       <input
         name="name"
+        className="form-control"
         onChange={(e) => handleChange(e.target.name, e.target.value)}
         value={name}
         type="text"
@@ -47,6 +49,7 @@ class Home extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.addPlayerToLocalStorage = this.addPlayerToLocalStorage.bind(this);
   }
+
   componentDidMount() {
     getToken().then((value) => {
       localStorage.setItem('token', value);
@@ -75,22 +78,50 @@ class Home extends React.Component {
 
   render() {
     return (
-      <form>
-        <EmailInput email={this.state.email} handleChange={this.handleChange} />
-        <NameInput name={this.state.name} handleChange={this.handleChange} />
-        <Link to="/play">
-          <button
-            disabled={!(!!this.state.name && !!this.state.email)}
-            data-testid="btn-play"
-            onClick={() => this.addPlayerToLocalStorage(this.state.email, this.state.name)}
-          >
-            Jogar!
-          </button>
-        </Link>
-        <Link to="/settings">
-          <button data-testid="btn-settings">Configurações</button>
-        </Link>
-      </form>
+      <div className="container">
+        <div className="row justify-content-center align-items-center">
+          <div className="col">
+            <div className="card">
+              <div className="container">
+                <div className="row mb-5 align-items-center justify-content-center">
+                  <div className="col-4">
+                    <h1 className="text-center my-5">Bem-vindo ao <strong>Trivia Game</strong></h1>
+                    <form>
+                      <div className="row justify-content-center">
+                        <div className="form-group w-100">
+                          <EmailInput email={this.state.email} handleChange={this.handleChange} />
+                        </div>
+                        <div className="form-group w-100">
+                          <NameInput name={this.state.name} handleChange={this.handleChange} />
+                        </div>
+                      </div>
+                      <div className="row justify-content-between">
+                        <Link to="/settings">
+                          <button data-testid="btn-settings" className="btn btn-secondary">
+                            Configurações
+                          </button>
+                        </Link>
+                        <Link to="/play">
+                          <button
+                            className="btn btn-primary px-4"
+                            disabled={!(!!this.state.name && !!this.state.email)}
+                            data-testid="btn-play"
+                            onClick={() =>
+                              this.addPlayerToLocalStorage(this.state.email, this.state.name)
+                            }
+                          >
+                            Jogar!
+                          </button>
+                        </Link>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }

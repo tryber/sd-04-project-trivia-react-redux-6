@@ -5,8 +5,20 @@ const getToken = async () => {
   return dataJSON.token;
 };
 
-const getQuestions = async (token) => {
-  const URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
+const resetToken = async (token) => {
+  const URL = `https://opentdb.com/api_token.php?command=reset&token=${token}`;
+  await fetch(URL);
+};
+
+const getQuestions = async (token, settings) => {
+  let URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
+  if (settings) {
+    const category = settings.categories !== 'none' ? `&category=${settings.categories}` : 'a';
+    const difficulty = settings.difficulty !== 'none' ? `&difficulty=${settings.difficulty}` : '';
+    const type = settings.type !== 'none' ? `&type=${settings.type}` : '';
+    URL = `https://opentdb.com/api.php?amount=5${category}${difficulty}${type}&token=${token}`;
+  }
+  console.log(URL);
   const data = await fetch(URL);
   const dataJSON = await data.json();
   return dataJSON;
@@ -19,18 +31,4 @@ const getCategory = async () => {
   return dataJSON.trivia_categories;
 };
 
-const getDifficulty = async () => {
-  const URL = 'https://opentdb.com/api_difficulty.php';
-  const data = await fetch(URL);
-  const dataJSON = await data.json();
-  return dataJSON;
-};
-
-const getType = async () => {
-  const URL = 'https://opentdb.com/api_type.php';
-  const data = await fetch(URL);
-  const dataJSON = await data.json();
-  return dataJSON;
-};
-
-export { getToken, getQuestions, getCategory, getDifficulty, getType };
+export { getToken, getQuestions, getCategory, resetToken };

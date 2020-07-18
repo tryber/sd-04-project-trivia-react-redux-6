@@ -9,7 +9,7 @@ export default function Feedback() {
 
   useEffect(() => {
     const storagedRanking = localStorage.getItem('ranking');
-    const { name, score, gravatarEmail } = user; 
+    const { name, score, gravatarEmail } = user;
     if (storagedRanking) {
       localStorage.setItem(
         'ranking',
@@ -22,7 +22,7 @@ export default function Feedback() {
       localStorage.setItem(
         'ranking',
         JSON.stringify([
-          { name: name, score: score, picture: getImageUrl(gravatarEmail) },
+          { name, score, picture: getImageUrl(gravatarEmail) },
         ]),
       );
     }
@@ -44,7 +44,8 @@ export default function Feedback() {
                 <div className="col align-items-center text-center">
                   {messageFeedback(user.assertions)}
                   <h3 className="text-center">
-                    Você acertou <span data-testid="feedback-total-question">{user.assertions}</span> questões
+                    Você acertou <span data-testid="feedback-total-question">
+                      {user.assertions}</span> questões
                   </h3>
                   <h3 className="text-center">
                     Um total de <span data-testid="feedback-total-score">{user.score}</span> pontos

@@ -16,22 +16,22 @@ const type = [
 
 export default class Settings extends Component {
   constructor(props) {
+    const settingsStoraged = localStorage.getItem('settings');
     super(props);
     this.state = {
       categories: [],
-      settings: {
-        categories: 'none',
-        difficulty: 'none',
-        type: 'none',
-      },
+      settings: settingsStoraged
+        ? JSON.parse(settingsStoraged)
+        : {
+            categories: 'none',
+            difficulty: 'none',
+            type: 'none',
+          },
     };
   }
 
   componentDidMount() {
     getCategory().then((categories) => this.setState((state) => ({ ...state, categories })));
-    const settingsStoraged = localStorage.getItem('settings');
-    if (settingsStoraged)
-      this.setState((state) => ({ ...state, settings: JSON.parse(settingsStoraged) }));
   }
 
   componentDidUpdate(_, prevState) {

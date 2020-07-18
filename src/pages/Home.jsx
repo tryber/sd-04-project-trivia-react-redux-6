@@ -41,11 +41,17 @@ function NameInput({ name, handleChange }) {
 
 class Home extends React.Component {
   constructor() {
+    const storagedState = localStorage.getItem('state');
     super();
-    this.state = {
-      name: '',
-      email: '',
-    };
+    this.state = storagedState
+      ? {
+          name: JSON.parse(storagedState).player.name,
+          email: JSON.parse(storagedState).player.gravatarEmail,
+        }
+      : {
+          name: '',
+          email: '',
+        };
     this.handleChange = this.handleChange.bind(this);
     this.addPlayerToLocalStorage = this.addPlayerToLocalStorage.bind(this);
   }
@@ -54,13 +60,6 @@ class Home extends React.Component {
     getToken().then((value) => {
       localStorage.setItem('token', value);
     });
-
-    const storagedState = localStorage.getItem('state');
-    if (storagedState) {
-      const name = JSON.parse(storagedState).player.name;
-      const email = JSON.parse(storagedState).player.gravatarEmail;
-      this.setState({ name, email });
-    }
   }
 
   handleChange(key, value) {

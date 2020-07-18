@@ -12,7 +12,10 @@ function RankingTable(props) {
       {ranking
         .sort((a, b) => b.score - a.score)
         .map((player, index) => (
-          <li key={player.name+player.score+Math.floor(Math.random()*100)} className="list-group-item">
+          <li
+            key={player.name + player.score + Math.floor(Math.random() * 100)}
+            className="list-group-item"
+          >
             <div className="d-flex justify-content-between align-items-center">
               <div className="d-flex align-items-center ">
                 <img className="mr-2 rounded-circle" height="50px" src={player.picture} alt="" />

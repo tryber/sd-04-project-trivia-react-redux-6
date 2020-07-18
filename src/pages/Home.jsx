@@ -54,6 +54,13 @@ class Home extends React.Component {
     getToken().then((value) => {
       localStorage.setItem('token', value);
     });
+
+    const storagedState = localStorage.getItem('state');
+    if (storagedState) {
+      const name = JSON.parse(storagedState).player.name;
+      const email = JSON.parse(storagedState).player.gravatarEmail;
+      this.setState({ name, email });
+    }
   }
 
   handleChange(key, value) {
@@ -85,7 +92,9 @@ class Home extends React.Component {
               <div className="container">
                 <div className="row mb-5 align-items-center justify-content-center">
                   <div className="col-4">
-                    <h1 className="text-center my-5">Bem-vindo ao <strong>Trivia Game</strong></h1>
+                    <h1 className="text-center my-5">
+                      Bem-vindo ao <strong>Trivia Game</strong>
+                    </h1>
                     <form>
                       <div className="row justify-content-center">
                         <div className="form-group w-100">

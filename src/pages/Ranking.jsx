@@ -10,13 +10,13 @@ function RankingTable(props) {
   return (
     <ul className="list-group">
       {ranking
-        .sort((a, b) => a.score - b.score)
+        .sort((a, b) => b.score - a.score)
         .map((player, index) => (
-          <li className="list-group-item">
+          <li key={player.name+player.score+Math.floor(Math.random()*100)} className="list-group-item">
             <div className="d-flex justify-content-between align-items-center">
               <div className="d-flex align-items-center ">
                 <img className="mr-2 rounded-circle" height="50px" src={player.picture} alt="" />
-                <p data-testid={`player-name-${index}`}>{player.name}</p>
+                <p className="mb-0" data-testid={`player-name-${index}`}>{player.name}</p>
               </div>
               <div className="d-flex align-items-center">
                 <small>Pontos: </small>
@@ -40,7 +40,7 @@ RankingTable.propTypes = {
 
 export default function Ranking() {
   const [ranking] = useState(() => {
-    const rankingLocalStorage = localStorage.getItem('@trivia-game/ranking');
+    const rankingLocalStorage = localStorage.getItem('ranking');
     if (rankingLocalStorage) return JSON.parse(rankingLocalStorage);
     return [];
   });
@@ -50,10 +50,10 @@ export default function Ranking() {
       <div className="row justify-content-center align-items-center">
         <div className="col">
           <div className="card">
-            <h1 className="card-title text-center">Ranking</h1>
+            <h1 className="card-title text-center mt-5 mb-4" data-testid="ranking-title">Ranking</h1>
             <div className="card-body">
               <RankingTable ranking={ranking} />
-              <div className="d-flex justify-content-center mt-2">
+              <div className="d-flex justify-content-center mt-5 mb-4">
                 <Link
                   to="/"
                   onClick={() => console.log('reseta o score e assertions do player')}

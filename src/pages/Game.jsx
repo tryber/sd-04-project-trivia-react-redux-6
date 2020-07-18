@@ -121,7 +121,7 @@ export default function Game() {
     const token = localStorage.getItem('token');
     const settings = localStorage.getItem('settings');
     getQuestions(token, JSON.parse(settings)).then((response) => {
-      if(response.response_code === 4) resetToken(token)
+      if (response.response_code === 4) resetToken(token);
       setQuestions(response.results);
       setQuestionOnScreen(response.results[0]);
     });
@@ -140,13 +140,25 @@ export default function Game() {
   const handleAnswer = (e) => {
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
-        setPlayer({ ...player, score: player.score + 10 + timer * 3 });
+        setPlayer({
+          ...player,
+          assertions: player.assertions + 1,
+          score: player.score + 10 + (timer * 3),
+        });
       }
       if (questionOnScreen.difficulty === 'medium') {
-        setPlayer({ ...player, score: player.score + 10 + timer * 2 });
+        setPlayer({
+          ...player,
+          assertions: player.assertions + 1,
+          score: player.score + 10 + (timer * 2),
+        });
       }
       if (questionOnScreen.difficulty === 'easy') {
-        setPlayer({ ...player, score: player.score + 10 + timer });
+        setPlayer({
+          ...player,
+          assertions: player.assertions + 1,
+          score: player.score + 10 + timer,
+        });
       }
     }
     setIsActive(false);

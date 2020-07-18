@@ -13,12 +13,11 @@ const resetToken = async (token) => {
 const getQuestions = async (token, settings) => {
   let URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
   if (settings) {
-    const category = settings.categories !== 'none' ? `&category=${settings.categories}` : 'a';
+    const category = settings.categories !== 'none' ? `&category=${settings.categories}` : '';
     const difficulty = settings.difficulty !== 'none' ? `&difficulty=${settings.difficulty}` : '';
     const type = settings.type !== 'none' ? `&type=${settings.type}` : '';
     URL = `https://opentdb.com/api.php?amount=5${category}${difficulty}${type}&token=${token}`;
   }
-  console.log(URL);
   const data = await fetch(URL);
   const dataJSON = await data.json();
   return dataJSON;

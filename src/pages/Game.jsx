@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { decode } from 'he';
 import PropTypes from 'prop-types';
 
-import { getQuestions } from '../services/api';
+import { getQuestions, resetToken } from '../services/api';
 import Header from '../components/Header';
 
 import '../css/answerButtons.css';
@@ -61,7 +61,13 @@ export default function Game() {
   });
   const [questionOnScreen, setQuestionOnScreen] = useState(null);
   const [answers, setAnswers] = useState([]);
-  const [index, setIndex] = useState(0);
+
+  const [index, setIndex] = useState(() => {
+    const storagedIndex = localStorage.getItem('index');
+    if (storagedIndex) return Number(storagedIndex);
+    return 0;
+  });
+
   const [isFinished, setIsFinished] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [timer, setTimer] = useState(30);
@@ -113,7 +119,9 @@ export default function Game() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    getQuestions(token).then((response) => {
+    const settings = localStorage.getItem('settings');
+    getQuestions(token, JSON.parse(settings)).then((response) => {
+      if (response.response_code === 4) resetToken(token);
       setQuestions(response.results);
       setQuestionOnScreen(response.results[0]);
     });
@@ -122,7 +130,9 @@ export default function Game() {
   useEffect(() => {
     if (index < 5) {
       if (questions.length) setQuestionOnScreen(questions[index]);
+      localStorage.setItem('index', index);
     } else {
+      localStorage.setItem('index', 0);
       setIsFinished(true);
     }
   }, [index, questions]);
@@ -130,19 +140,25 @@ export default function Game() {
   const handleAnswer = (e) => {
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
-        setPlayer({ ...player,
+        setPlayer({
+          ...player,
           assertions: player.assertions + 1,
-          score: player.score + 10 + (timer * 3) });
+          score: player.score + 10 + (timer * 3),
+        });
       }
       if (questionOnScreen.difficulty === 'medium') {
-        setPlayer({ ...player,
+        setPlayer({
+          ...player,
           assertions: player.assertions + 1,
-          score: player.score + 10 + (timer * 2) });
+          score: player.score + 10 + (timer * 2),
+        });
       }
       if (questionOnScreen.difficulty === 'easy') {
-        setPlayer({ ...player,
+        setPlayer({
+          ...player,
           assertions: player.assertions + 1,
-          score: player.score + 10 + timer });
+          score: player.score + 10 + timer,
+        });
       }
     }
     setIsActive(false);

@@ -53,7 +53,9 @@ export default function Ranking() {
       <div className="row justify-content-center align-items-center">
         <div className="col">
           <div className="card">
-            <h1 className="card-title text-center mt-5 mb-4" data-testid="ranking-title">Ranking</h1>
+            <h1 className="card-title text-center mt-5 mb-4" data-testid="ranking-title">
+              Ranking
+            </h1>
             <div className="card-body">
               <RankingTable ranking={ranking} />
               <div className="d-flex justify-content-center mt-5 mb-4">

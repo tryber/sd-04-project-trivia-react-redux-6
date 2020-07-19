@@ -45,13 +45,13 @@ class Home extends React.Component {
     super();
     this.state = storagedState
       ? {
-          name: JSON.parse(storagedState).player.name,
-          email: JSON.parse(storagedState).player.gravatarEmail,
-        }
+        name: JSON.parse(storagedState).player.name,
+        email: JSON.parse(storagedState).player.gravatarEmail,
+      }
       : {
-          name: '',
-          email: '',
-        };
+        name: '',
+        email: '',
+      };
     this.handleChange = this.handleChange.bind(this);
     this.addPlayerToLocalStorage = this.addPlayerToLocalStorage.bind(this);
   }

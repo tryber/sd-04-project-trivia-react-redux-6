@@ -23,10 +23,10 @@ export default class Settings extends Component {
       settings: settingsStoraged
         ? JSON.parse(settingsStoraged)
         : {
-            categories: 'none',
-            difficulty: 'none',
-            type: 'none',
-          },
+          categories: 'none',
+          difficulty: 'none',
+          type: 'none',
+        },
     };
   }
 

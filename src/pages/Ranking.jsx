@@ -61,7 +61,6 @@ export default function Ranking() {
               <div className="d-flex justify-content-center mt-5 mb-4">
                 <Link
                   to="/"
-                  onClick={() => console.log('reseta o score e assertions do player')}
                   data-testid="btn-go-home"
                   className="btn btn-danger"
                 >

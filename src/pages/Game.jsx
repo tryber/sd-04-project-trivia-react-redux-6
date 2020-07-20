@@ -52,16 +52,17 @@ const Question = ({ question, timer, isActive }) => (
 );
 
 export default function Game() {
+  // VÃO P STORE
   const [questions, setQuestions] = useState([]);
-
   const [player, setPlayer] = useState(() => {
     const state = localStorage.getItem('state');
     if (state) return JSON.parse(state).player;
     return {};
   });
+  // FIM
+
   const [questionOnScreen, setQuestionOnScreen] = useState(null);
   const [answers, setAnswers] = useState([]);
-
   const [index, setIndex] = useState(() => {
     const storagedIndex = localStorage.getItem('index');
     if (storagedIndex) return Number(storagedIndex);

@@ -47,9 +47,11 @@ RankingTable.propTypes = {
 
 export default function Ranking() {
   const [ranking, setRanking] = useState([]);
+
   useEffect(() => {
     getRanking().then((result) => setRanking(result));
   }, []);
+  
   return (
     <div className="container">
       <div className="row justify-content-center align-items-center">

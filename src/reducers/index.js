@@ -1,4 +1,5 @@
 import playerReducer from './player';
 import settingsReducer from './settings';
+import questionReducer from './questions';
 
-export { playerReducer, settingsReducer };
+export { playerReducer, settingsReducer, questionReducer };

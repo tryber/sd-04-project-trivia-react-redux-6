@@ -1,7 +1,9 @@
 /* eslint class-methods-use-this: ["off"] */
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { fetchQuestions } from '../actions';
 
 import { getToken } from '../services/api';
 
@@ -45,13 +47,13 @@ class Home extends React.Component {
     super();
     this.state = storagedState
       ? {
-        name: JSON.parse(storagedState).player.name,
-        email: JSON.parse(storagedState).player.gravatarEmail,
-      }
+          name: JSON.parse(storagedState).player.name,
+          email: JSON.parse(storagedState).player.gravatarEmail,
+        }
       : {
-        name: '',
-        email: '',
-      };
+          name: '',
+          email: '',
+        };
     this.handleChange = this.handleChange.bind(this);
     this.addPlayerToLocalStorage = this.addPlayerToLocalStorage.bind(this);
   }
@@ -78,6 +80,9 @@ class Home extends React.Component {
   }
 
   addPlayerToLocalStorage(email, name) {
+    const {getQuestions} = this.props;
+    const token = localStorage.getItem('token');
+    getQuestions(token);
     const state = { player: { name, assertions: 0, score: 0, gravatarEmail: email } };
     localStorage.setItem('state', JSON.stringify(state));
   }
@@ -134,7 +139,11 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+const mapDispatchToProps = (dispatch) => ({
+  getQuestions: (token, settings) => dispatch(fetchQuestions(token, settings)),
+});
+
+export default connect(null, mapDispatchToProps)(Home);
 
 NameInput.propTypes = {
   name: PropTypes.string.isRequired,

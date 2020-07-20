@@ -2,30 +2,30 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import getImageUrl from '../services/gravatar';
+import { addToRanking } from '../services/ranking';
 
 export default function Feedback() {
   const state = localStorage.getItem('state');
   const user = JSON.parse(state).player;
 
   useEffect(() => {
-    const storagedRanking = localStorage.getItem('ranking');
     const { name, score, gravatarEmail } = user;
-    if (storagedRanking) {
-      localStorage.setItem(
-        'ranking',
-        JSON.stringify([
-          ...JSON.parse(storagedRanking),
-          { name, score, picture: getImageUrl(gravatarEmail) },
-        ]),
-      );
-    } else {
-      localStorage.setItem(
-        'ranking',
-        JSON.stringify([
-          { name, score, picture: getImageUrl(gravatarEmail) },
-        ]),
-      );
-    }
+    addToRanking(name, score, getImageUrl(gravatarEmail));
+    // const storagedRanking = localStorage.getItem('ranking');
+    // if (storagedRanking) {
+    //   localStorage.setItem(
+    //     'ranking',
+    //     JSON.stringify([
+    //       ...JSON.parse(storagedRanking),
+    //       { name, score, picture: getImageUrl(gravatarEmail) },
+    //     ]),
+    //   );
+    // } else {
+    //   localStorage.setItem(
+    //     'ranking',
+    //     JSON.stringify([{ name, score, picture: getImageUrl(gravatarEmail) }]),
+    //   );
+    // }
   }, [user]);
 
   const messageFeedback = (questions) => {
@@ -44,8 +44,8 @@ export default function Feedback() {
                 <div className="col align-items-center text-center">
                   {messageFeedback(user.assertions)}
                   <h3 className="text-center">
-                    Você acertou <span data-testid="feedback-total-question">
-                      {user.assertions}</span> questões
+                    Você acertou{' '}
+                    <span data-testid="feedback-total-question">{user.assertions}</span> questões
                   </h3>
                   <h3 className="text-center">
                     Um total de <span data-testid="feedback-total-score">{user.score}</span> pontos
@@ -54,11 +54,7 @@ export default function Feedback() {
               </div>
               <div className="row justify-content-center my-5">
                 <div className="col-4 d-flex flex-column justify-content-center">
-                  <Link
-                    to="/ranking"
-                    data-testid="btn-ranking"
-                    className="btn btn-primary"
-                  >
+                  <Link to="/ranking" data-testid="btn-ranking" className="btn btn-primary">
                     Ver Ranking
                   </Link>
                   <Link to="/" data-testid="btn-play-again" className="btn btn-primary mt-2">

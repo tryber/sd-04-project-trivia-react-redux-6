@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import { getRanking } from '../services/ranking';
 
 function RankingTable(props) {
   const { ranking } = props;
@@ -19,7 +21,9 @@ function RankingTable(props) {
             <div className="d-flex justify-content-between align-items-center">
               <div className="d-flex align-items-center ">
                 <img className="mr-2 rounded-circle" height="50px" src={player.picture} alt="" />
-                <p className="mb-0" data-testid={`player-name-${index}`}>{player.name}</p>
+                <p className="mb-0" data-testid={`player-name-${index}`}>
+                  {player.name}
+                </p>
               </div>
               <div className="d-flex align-items-center">
                 <small>Pontos: </small>
@@ -42,12 +46,10 @@ RankingTable.propTypes = {
 };
 
 export default function Ranking() {
-  const [ranking] = useState(() => {
-    const rankingLocalStorage = localStorage.getItem('ranking');
-    if (rankingLocalStorage) return JSON.parse(rankingLocalStorage);
-    return [];
-  });
-
+  const [ranking, setRanking] = useState([]);
+  useEffect(() => {
+    getRanking().then((result) => setRanking(result));
+  }, []);
   return (
     <div className="container">
       <div className="row justify-content-center align-items-center">
@@ -59,11 +61,7 @@ export default function Ranking() {
             <div className="card-body">
               <RankingTable ranking={ranking} />
               <div className="d-flex justify-content-center mt-5 mb-4">
-                <Link
-                  to="/"
-                  data-testid="btn-go-home"
-                  className="btn btn-danger"
-                >
+                <Link to="/" data-testid="btn-go-home" className="btn btn-danger">
                   Voltar
                 </Link>
               </div>
@@ -74,4 +72,3 @@ export default function Ranking() {
     </div>
   );
 }
-

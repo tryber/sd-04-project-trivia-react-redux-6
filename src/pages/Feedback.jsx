@@ -11,21 +11,6 @@ export default function Feedback() {
   useEffect(() => {
     const { name, score, gravatarEmail } = user;
     addToRanking(name, score, getImageUrl(gravatarEmail));
-    // const storagedRanking = localStorage.getItem('ranking');
-    // if (storagedRanking) {
-    //   localStorage.setItem(
-    //     'ranking',
-    //     JSON.stringify([
-    //       ...JSON.parse(storagedRanking),
-    //       { name, score, picture: getImageUrl(gravatarEmail) },
-    //     ]),
-    //   );
-    // } else {
-    //   localStorage.setItem(
-    //     'ranking',
-    //     JSON.stringify([{ name, score, picture: getImageUrl(gravatarEmail) }]),
-    //   );
-    // }
   }, [user]);
 
   const messageFeedback = (questions) => {

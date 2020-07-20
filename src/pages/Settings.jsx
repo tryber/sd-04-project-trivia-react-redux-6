@@ -20,7 +20,7 @@ export default class Settings extends Component {
     super(props);
     this.state = {
       categories: [],
-      settings: settingsStoraged
+      settings: settingsStoraged //vai p store
         ? JSON.parse(settingsStoraged)
         : {
           categories: 'none',

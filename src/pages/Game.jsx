@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { decode } from 'he';
 import PropTypes from 'prop-types';
 
-import { getQuestions, resetToken } from '../services/api';
+// import { getQuestions, resetToken } from '../services/api';
 import Header from '../components/Header';
 
 import '../css/answerButtons.css';
@@ -51,9 +52,9 @@ const Question = ({ question, timer, isActive }) => (
   </div>
 );
 
-export default function Game() {
+function Game(props) {
+  const { questions } = props;
   // VÃO P STORE
-  const [questions, setQuestions] = useState([]);
   const [player, setPlayer] = useState(() => {
     const state = localStorage.getItem('state');
     if (state) return JSON.parse(state).player;
@@ -118,15 +119,15 @@ export default function Game() {
     return () => clearTimeout(t);
   }, [timer]);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const settings = localStorage.getItem('settings');
-    getQuestions(token, JSON.parse(settings)).then((response) => {
-      if (response.response_code === 4) resetToken(token);
-      setQuestions(response.results);
-      setQuestionOnScreen(response.results[0]);
-    });
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   const settings = localStorage.getItem('settings');
+  //   getQuestions(token, JSON.parse(settings)).then((response) => {
+  //     if (response.response_code === 4) resetToken(token);
+  //     setQuestions(response.results);
+  //     setQuestionOnScreen(response.results[0]);
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (index < 5) {
@@ -168,7 +169,6 @@ export default function Game() {
   const nextQuestion = () => {
     setIndex(index + 1);
   };
-
   return (
     <div className="container">
       {isFinished && <Redirect to="/results" />}
@@ -202,6 +202,24 @@ export default function Game() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  questions:
+    state.questionReducer.questions.response_code === 0
+      ? state.questionReducer.questions.results
+      : [],
+});
+
+export default connect(mapStateToProps)(Game);
+
+Game.propTypes = {
+  questions: PropTypes.arrayOf(
+    PropTypes.shape({
+      question: PropTypes.string,
+      category: PropTypes.string,
+    }),
+  ).isRequired,
+};
 
 Answers.propTypes = {
   answers: PropTypes.arrayOf(PropTypes.string).isRequired,

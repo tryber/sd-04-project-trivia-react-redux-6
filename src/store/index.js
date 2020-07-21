@@ -1,7 +1,7 @@
 import { createStore, combineReducers } from 'redux';
-import listReducer from '../reducers';
+import { playerReducer } from '../reducers';
 
-const rootReducer = combineReducers({ listReducer });
+const rootReducer = combineReducers({ playerReducer });
 
 const store = createStore(rootReducer);
 

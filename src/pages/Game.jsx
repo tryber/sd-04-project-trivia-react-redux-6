@@ -7,6 +7,8 @@ import { getQuestions, resetToken } from '../services/api';
 import Header from '../components/Header';
 
 import '../css/answerButtons.css';
+import { connect } from 'react-redux';
+import { setPlayer } from '../actions';
 
 const Answers = ({ answers, handleAnswer, isActive, correctAnswer }) => (
   <div className="col">
@@ -51,15 +53,7 @@ const Question = ({ question, timer, isActive }) => (
   </div>
 );
 
-export default function Game() {
-  // VÃO P STORE
-  const [questions, setQuestions] = useState([]);
-  const [player, setPlayer] = useState(() => {
-    const state = localStorage.getItem('state');
-    if (state) return JSON.parse(state).player;
-    return {};
-  });
-  // FIM
+export default function Game({ name, gravatarEmail, assertions, score }) {
 
   const [questionOnScreen, setQuestionOnScreen] = useState(null);
   const [answers, setAnswers] = useState([]);
@@ -175,7 +169,7 @@ export default function Game() {
       <div className="row justify-content-center align-items-center">
         <div className="col">
           <div className="card">
-            <Header player={player} />
+            <Header player={{ name, gravatarEmail, score, assertions }} />
             <div className="container">
               <div className="row my-5 align-items-center">
                 <Question question={questionOnScreen} timer={timer} isActive={isActive} />
@@ -222,3 +216,16 @@ Question.propTypes = {
 Question.defaultProps = {
   question: { question: '', category: '' },
 };
+
+const mapStateToProps = (state) => ({
+  name: state.playerReducer.name,
+  gravatarEmail: state.playerReducer.gravatarEmail,
+  assertions: state.playerReducer.assertions,
+  score: state.playerReducer.score,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  setPlayer: (player) => dispatch(setPlayer(player)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

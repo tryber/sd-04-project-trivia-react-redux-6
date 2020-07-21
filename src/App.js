@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 // import logo from './trivia.png';
 import './App.css';
 import Home from './pages/Home';
@@ -12,6 +14,7 @@ import Settings from './pages/Settings';
 
 export default function App() {
   return (
+    <Provider store={store}>
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
@@ -21,5 +24,6 @@ export default function App() {
         <Route exact path="/settings" component={Settings} />
       </Switch>
     </BrowserRouter>
+    </Provider>
   );
 }

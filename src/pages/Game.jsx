@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { decode } from 'he';
 import PropTypes from 'prop-types';
 
-import { getQuestions, resetToken } from '../services/api';
+// import { getQuestions, resetToken } from '../services/api';
 import Header from '../components/Header';
 
 import '../css/answerButtons.css';
-import { connect } from 'react-redux';
 import { setPlayer } from '../actions';
 
 const Answers = ({ answers, handleAnswer, isActive, correctAnswer }) => (
@@ -53,7 +53,7 @@ const Question = ({ question, timer, isActive }) => (
   </div>
 );
 
-export default function Game({ name, gravatarEmail, assertions, score }) {
+function Game({ name, gravatarEmail, assertions, score, questions, setPlayer }) {
 
   const [questionOnScreen, setQuestionOnScreen] = useState(null);
   const [answers, setAnswers] = useState([]);
@@ -86,11 +86,6 @@ export default function Game({ name, gravatarEmail, assertions, score }) {
   };
 
   useEffect(() => {
-    const state = { player };
-    localStorage.setItem('state', JSON.stringify(state));
-  }, [player]);
-
-  useEffect(() => {
     if (questionOnScreen) {
       setAnswers(
         shuffle(questionOnScreen.incorrect_answers.concat(questionOnScreen.correct_answer)),
@@ -112,15 +107,15 @@ export default function Game({ name, gravatarEmail, assertions, score }) {
     return () => clearTimeout(t);
   }, [timer]);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const settings = localStorage.getItem('settings');
-    getQuestions(token, JSON.parse(settings)).then((response) => {
-      if (response.response_code === 4) resetToken(token);
-      setQuestions(response.results);
-      setQuestionOnScreen(response.results[0]);
-    });
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   const settings = localStorage.getItem('settings');
+  //   getQuestions(token, JSON.parse(settings)).then((response) => {
+  //     if (response.response_code === 4) resetToken(token);
+  //     setQuestions(response.results);
+  //     setQuestionOnScreen(response.results[0]);
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (index < 5) {
@@ -136,23 +131,23 @@ export default function Game({ name, gravatarEmail, assertions, score }) {
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
         setPlayer({
-          ...player,
-          assertions: player.assertions + 1,
-          score: player.score + 10 + (timer * 3),
+          name, gravatarEmail,
+          assertions: assertions + 1,
+          score: score + 10 + (timer * 3),
         });
       }
       if (questionOnScreen.difficulty === 'medium') {
         setPlayer({
-          ...player,
-          assertions: player.assertions + 1,
-          score: player.score + 10 + (timer * 2),
+          name, gravatarEmail,
+          assertions: assertions + 1,
+          score: score + 10 + (timer * 2),
         });
       }
       if (questionOnScreen.difficulty === 'easy') {
         setPlayer({
-          ...player,
-          assertions: player.assertions + 1,
-          score: player.score + 10 + timer,
+          name, gravatarEmail,
+          assertions: assertions + 1,
+          score: score + 10 + timer,
         });
       }
     }
@@ -162,7 +157,6 @@ export default function Game({ name, gravatarEmail, assertions, score }) {
   const nextQuestion = () => {
     setIndex(index + 1);
   };
-
   return (
     <div className="container">
       {isFinished && <Redirect to="/results" />}
@@ -197,6 +191,15 @@ export default function Game({ name, gravatarEmail, assertions, score }) {
   );
 }
 
+Game.propTypes = {
+  questions: PropTypes.arrayOf(
+    PropTypes.shape({
+      question: PropTypes.string,
+      category: PropTypes.string,
+    }),
+  ).isRequired,
+};
+
 Answers.propTypes = {
   answers: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleAnswer: PropTypes.func.isRequired,
@@ -222,6 +225,10 @@ const mapStateToProps = (state) => ({
   gravatarEmail: state.playerReducer.gravatarEmail,
   assertions: state.playerReducer.assertions,
   score: state.playerReducer.score,
+  questions:
+  state.questionReducer.questions.response_code === 0
+    ? state.questionReducer.questions.results
+    : [],
 })
 
 const mapDispatchToProps = (dispatch) => ({

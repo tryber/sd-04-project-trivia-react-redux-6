@@ -47,13 +47,13 @@ class Home extends React.Component {
     super();
     this.state = storagedState
       ? {
-          name: JSON.parse(storagedState).player.name,
-          email: JSON.parse(storagedState).player.gravatarEmail,
-        }
+        name: JSON.parse(storagedState).player.name,
+        email: JSON.parse(storagedState).player.gravatarEmail,
+      }
       : {
-          name: '',
-          email: '',
-        };
+        name: '',
+        email: '',
+      };
     this.handleChange = this.handleChange.bind(this);
     this.addPlayerToLocalStorage = this.addPlayerToLocalStorage.bind(this);
   }
@@ -80,7 +80,7 @@ class Home extends React.Component {
   }
 
   addPlayerToLocalStorage(email, name) {
-    const {getQuestions} = this.props;
+    const { getQuestions } = this.props;
     const token = localStorage.getItem('token');
     getQuestions(token);
     const state = { player: { name, assertions: 0, score: 0, gravatarEmail: email } };
@@ -144,6 +144,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Home);
+
+Home.propTypes = {
+  getQuestions: PropTypes.func.isRequired,
+};
 
 NameInput.propTypes = {
   name: PropTypes.string.isRequired,

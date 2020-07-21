@@ -138,21 +138,21 @@ function Game(props) {
       setIsFinished(true);
     }
   }, [index, questions]);
-  
+
   const handleAnswer = (e) => {
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
         setPlayer({
           ...player,
           assertions: player.assertions + 1,
-          score: player.score + 10 + timer * 3,
+          score: player.score + 10 + (timer * 3),
         });
       }
       if (questionOnScreen.difficulty === 'medium') {
         setPlayer({
           ...player,
           assertions: player.assertions + 1,
-          score: player.score + 10 + timer * 2,
+          score: player.score + 10 + (timer * 2),
         });
       }
       if (questionOnScreen.difficulty === 'easy') {
@@ -211,6 +211,10 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Game);
+
+Game.propTypes = {
+  questions: PropTypes.array.isRequired,
+};
 
 Answers.propTypes = {
   answers: PropTypes.arrayOf(PropTypes.string).isRequired,

@@ -213,7 +213,12 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Game);
 
 Game.propTypes = {
-  questions: PropTypes.array.isRequired,
+  questions: PropTypes.arrayOf(
+    PropTypes.shape({
+      question: PropTypes.string,
+      category: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 Answers.propTypes = {

@@ -194,16 +194,15 @@ function Game({ name, gravatarEmail, assertions, score, questions, setPlayer }) 
 }
 
 Game.propTypes = {
+  name: PropTypes.string,
+  gravatarEmail: PropTypes.string,
+  assertions: PropTypes.number,
+  score: PropTypes.number,
+  setPlayer: PropTypes.string,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       question: PropTypes.string,
       category: PropTypes.string,
-      name: PropTypes.string,
-      gravatarEmail: PropTypes.string,
-      questions: PropTypes.object,
-      assertions: PropTypes.number,
-      score: PropTypes.number,
-      setPlayer: PropTypes.string
     }),
   ).isRequired,
 };

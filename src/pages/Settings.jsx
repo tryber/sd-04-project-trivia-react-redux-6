@@ -156,20 +156,24 @@ Settings.propTypes = {
     PropTypes.object,
   ),
   difficulty: PropTypes.arrayOf(
-    PropTypes.object,
+    PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string
+    }),
   ),
   type: PropTypes.arrayOf(
-    PropTypes.object,
+    PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string
+    }),
   ),
 };
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => ({
     categories: state.settingsReducer.categories,
     difficulty: state.settingsReducer.difficulty,
     type: state.settingsReducer.type,
-  };
-};
+});
 
 const mapDispatchToProps = (dispatch) => ({
   selectedCategory: (value) => dispatch(selectCategory(value)),

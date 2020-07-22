@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,7 +8,6 @@ import {
   selectDifficulty,
   selectType,
 } from '../actions/settings';
-import PropTypes from 'prop-types';
 
 const difficulty = [
   { name: 'Any Difficulty', id: 'none' },
@@ -143,20 +143,29 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-  selectedCategory: PropTypes.array,
-  selectedDifficulty: PropTypes.array,
-  selectedType: PropTypes.array,
-  categories: PropTypes.array,
-  difficulty: PropTypes.array,
-  type: PropTypes.array,
-}
+  selectedCategory: PropTypes.arrayOf(
+    PropTypes.shape({
+      categories: PropTypes.string
+    })
+  ),
+  selectedDifficulty: PropTypes.arrayOf(
+    PropTypes.shape({
+      difficulty: PropTypes.string
+    })
+  ),
+  difficulty: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string
+    })
+  ),
+};
 
 const mapStateToProps = (state) => {
-  return {
+  return ({
     categories: state.settingsReducer.categories,
     difficulty: state.settingsReducer.difficulty,
     type: state.settingsReducer.type,
-  };
+  });
 };
 
 const mapDispatchToProps = (dispatch) => ({

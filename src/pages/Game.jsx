@@ -53,7 +53,7 @@ const Question = ({ question, timer, isActive }) => (
   </div>
 );
 
-function Game({ name, gravatarEmail, assertions, score, questions, setPlayer }) {
+function Game({ name, gravatarEmail, assertions, score, questions, set }) {
   const [questionOnScreen, setQuestionOnScreen] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [index, setIndex] = useState(() => {
@@ -129,7 +129,7 @@ function Game({ name, gravatarEmail, assertions, score, questions, setPlayer }) 
   const handleAnswer = (e) => {
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
-        setPlayer({
+        set({
           name,
           gravatarEmail,
           assertions: assertions + 1,
@@ -137,7 +137,7 @@ function Game({ name, gravatarEmail, assertions, score, questions, setPlayer }) 
         });
       }
       if (questionOnScreen.difficulty === 'medium') {
-        setPlayer({
+        set({
           name,
           gravatarEmail,
           assertions: assertions + 1,
@@ -145,7 +145,7 @@ function Game({ name, gravatarEmail, assertions, score, questions, setPlayer }) 
         });
       }
       if (questionOnScreen.difficulty === 'easy') {
-        setPlayer({
+        set({
           name,
           gravatarEmail,
           assertions: assertions + 1,
@@ -238,7 +238,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setPlayer: (player) => dispatch(setPlayer(player)),
+  set: (player) => dispatch(setPlayer(player)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

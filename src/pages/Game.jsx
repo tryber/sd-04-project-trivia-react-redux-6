@@ -130,24 +130,21 @@ function Game({ name, gravatarEmail, assertions, score, questions, setPlayer }) 
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
         setPlayer({
-          name,
-          gravatarEmail,
+          name, gravatarEmail,
           assertions: assertions + 1,
           score: score + 10 + (timer * 3),
         });
       }
       if (questionOnScreen.difficulty === 'medium') {
         setPlayer({
-          name,
-          gravatarEmail,
+          name, gravatarEmail,
           assertions: assertions + 1,
           score: score + 10 + (timer * 2),
         });
       }
       if (questionOnScreen.difficulty === 'easy') {
         setPlayer({
-          name,
-          gravatarEmail,
+          name, gravatarEmail,
           assertions: assertions + 1,
           score: score + 10 + timer,
         });
@@ -194,11 +191,10 @@ function Game({ name, gravatarEmail, assertions, score, questions, setPlayer }) 
 }
 
 Game.propTypes = {
-  name: PropTypes.string,
-  gravatarEmail: PropTypes.string,
-  assertions: PropTypes.number,
-  score: PropTypes.number,
-  setPlayer: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       question: PropTypes.string,
@@ -236,10 +232,10 @@ const mapStateToProps = (state) => ({
   state.questionReducer.questions.response_code === 0
     ? state.questionReducer.questions.results
     : [],
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
   setPlayer: (player) => dispatch(setPlayer(player)),
-});
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

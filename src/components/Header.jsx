@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import getImageUrl from '../services/gravatar';
+import { setPlayer } from '../actions';
 
-export default function Header({ player }) {
+function Header({ name, score, gravatarEmail }) {
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="row justify-content-between align-items-center w-100">
@@ -13,23 +15,33 @@ export default function Header({ player }) {
               <img
                 data-testid="header-profile-picture"
                 className="rounded-circle mr-2"
-                src={getImageUrl(player.gravatarEmail)}
+                src={getImageUrl(gravatarEmail)}
                 alt=""
               />
-              <strong className="mb-0" data-testid="header-player-name">{player.name}</strong>
+              <strong className="mb-0" data-testid="header-player-name">{name}</strong>
             </div>
           </div>
         </div>
-        <div className="col-2">Pontos: <span data-testid="header-score">{player.score}</span></div>
+        <div className="col-2">Pontos: <span data-testid="header-score">{score}</span></div>
       </div>
     </nav>
   );
 }
 
 Header.propTypes = {
-  player: PropTypes.shape({
-    gravatarEmail: PropTypes.string,
-    name: PropTypes.string,
-    score: PropTypes.number,
-  }).isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  name: state.playerReducer.name,
+  gravatarEmail: state.playerReducer.gravatarEmail,
+  score: state.playerReducer.score,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setPlayer: (player) => dispatch(setPlayer(player)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

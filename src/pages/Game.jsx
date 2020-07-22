@@ -198,6 +198,7 @@ Game.propTypes = {
   gravatarEmail: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   assertions: PropTypes.number.isRequired,
+  set: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       question: PropTypes.string,

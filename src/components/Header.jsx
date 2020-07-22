@@ -41,7 +41,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setPlayer: (player) => dispatch(setPlayer(player)),
+  set: (player) => dispatch(setPlayer(player)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

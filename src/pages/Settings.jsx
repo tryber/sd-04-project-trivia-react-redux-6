@@ -1,23 +1,24 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { getCategory } from "../services/api";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getCategory } from '../services/api';
 import {
   selectCategory,
   selectDifficulty,
   selectType,
-} from "../actions/settings";
+} from '../actions/settings';
+import PropTypes from 'prop-types';
 
 const difficulty = [
-  { name: "Any Difficulty", id: "none" },
-  { name: "Easy", id: "easy" },
-  { name: "Medium", id: "medium" },
-  { name: "Hard", id: "hard" },
+  { name: 'Any Difficulty', id: 'none' },
+  { name: 'Easy', id: 'easy' },
+  { name: 'Medium', id: 'medium' },
+  { name: 'Hard', id: 'hard' },
 ];
 const type = [
-  { name: "Any Type", id: "none" },
-  { name: "Multiple Choice", id: "multiple" },
-  { name: "True/False", id: "boolean" },
+  { name: 'Any Type', id: 'none' },
+  { name: 'Multiple Choice', id: 'multiple' },
+  { name: 'True/False', id: 'boolean' },
 ];
 
 class Settings extends Component {
@@ -30,23 +31,23 @@ class Settings extends Component {
 
   componentDidMount() {
     getCategory().then((categories) =>
-      this.setState((state) => ({ ...state, categories }))
+      this.setState((state) => ({ ...state, categories })),
     );
   }
 
   handleChangeCategory(value) {
-    const { selectCategory } = this.props;
-    selectCategory(value);
+    const { selectedCategory } = this.props;
+    selectedCategory(value);
   }
 
   handleChangeDifficulty(value) {
-    const { selectDifficulty } = this.props;
-    selectDifficulty(value);
+    const { selectedDifficulty } = this.props;
+    selectedDifficulty(value);
   }
 
   handleChangeType(value) {
-    const { selectType } = this.props;
-    selectType(value);
+    const { selectedType } = this.props;
+    selectedType(value);
   }
 
   render() {
@@ -77,7 +78,7 @@ class Settings extends Component {
                               value={this.props.categories}
                               className="form-control"
                             >
-                              <option value={"none"}>Any Category</option>
+                              <option value={'none'}>Any Category</option>
                               {categories.map((item) => (
                                 <option key={item.id} value={item.id}>
                                   {item.name}
@@ -141,6 +142,15 @@ class Settings extends Component {
   }
 }
 
+Settings.propTypes = {
+  selectedCategory: PropTypes.array,
+  selectedDifficulty: PropTypes.array,
+  selectedType: PropTypes.array,
+  categories: PropTypes.array,
+  difficulty: PropTypes.array,
+  type: PropTypes.array,
+}
+
 const mapStateToProps = (state) => {
   return {
     categories: state.settingsReducer.categories,
@@ -150,9 +160,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  selectCategory: (value) => dispatch(selectCategory(value)),
-  selectDifficulty: (value) => dispatch(selectDifficulty(value)),
-  selectType: (value) => dispatch(selectType(value)),
+  selectedCategory: (value) => dispatch(selectCategory(value)),
+  selectedDifficulty: (value) => dispatch(selectDifficulty(value)),
+  selectedType: (value) => dispatch(selectType(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
-  categories: '',
-  difficulty: '',
-  type: '',
+  categories: 'none',
+  difficulty: 'none',
+  type: 'none',
 };
 
 function settingsReducer(state = INITIAL_STATE, action) {

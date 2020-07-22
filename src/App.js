@@ -1,16 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-// import logo from './trivia.png';
+import store from './store';
+
 import './App.css';
 import Home from './pages/Home';
 import Game from './pages/Game';
 import Feedback from './pages/Feedback';
 import Ranking from './pages/Ranking';
 import Settings from './pages/Settings';
-import store from './store';
-// import {  getToken, getQuestions } from './services/api';
-// import getImageUrl from './services/gravatar';
 
 export default function App() {
   return (

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import getImageUrl from '../services/gravatar';
-import { setPlayer } from '../actions';
 
 function Header({ name, score, gravatarEmail }) {
+  console.log(name)
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="row justify-content-between align-items-center w-100">
@@ -40,8 +40,4 @@ const mapStateToProps = (state) => ({
   score: state.playerReducer.score,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  set: (player) => dispatch(setPlayer(player)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps)(Header);

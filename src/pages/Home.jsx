@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchQuestions } from '../actions';
+import { fetchQuestions, setPlayer } from '../actions';
 
 import { getToken } from '../services/api';
 
@@ -55,7 +55,7 @@ class Home extends React.Component {
         email: '',
       };
     this.handleChange = this.handleChange.bind(this);
-    this.addPlayerToLocalStorage = this.addPlayerToLocalStorage.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -79,8 +79,9 @@ class Home extends React.Component {
     }
   }
 
-  addPlayerToLocalStorage(email, name) {
-    const { getQuestions } = this.props;
+  handleClick(email, name) {
+    const { getQuestions, set } = this.props;
+    set({ name, gravatarEmail: email, assertions: 0, score: 0 })
     const token = localStorage.getItem('token');
     getQuestions(token);
     const state = { player: { name, assertions: 0, score: 0, gravatarEmail: email } };
@@ -120,7 +121,7 @@ class Home extends React.Component {
                             disabled={!(!!this.state.name && !!this.state.email)}
                             data-testid="btn-play"
                             onClick={() =>
-                              this.addPlayerToLocalStorage(this.state.email, this.state.name)
+                              this.handleClick(this.state.email, this.state.name)
                             }
                           >
                             Jogar!
@@ -139,11 +140,16 @@ class Home extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  getQuestions: (token, settings) => dispatch(fetchQuestions(token, settings)),
+const mapStateToProps = (state) => ({
+  name: state.playerReducer.name,
 });
 
-export default connect(null, mapDispatchToProps)(Home);
+const mapDispatchToProps = (dispatch) => ({
+  getQuestions: (token, settings) => dispatch(fetchQuestions(token, settings)),
+  set: (player) => dispatch(setPlayer(player)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 Home.propTypes = {
   getQuestions: PropTypes.func.isRequired,

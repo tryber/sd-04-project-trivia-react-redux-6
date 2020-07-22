@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import getImageUrl from '../services/gravatar';
 import { addToRanking } from '../services/ranking';
+import { connect } from 'react-redux';
 
-export default function Feedback() {
-  const state = localStorage.getItem('state');
-  const user = JSON.parse(state).player;
+function Feedback({ name, score, assertions, gravatarEmail }) {
+
+  const user = { name, score, assertions, gravatarEmail };
 
   useEffect(() => {
     const { name, score, gravatarEmail } = user;
@@ -54,3 +55,12 @@ export default function Feedback() {
     </div>
   );
 }
+
+const mapsStateToProps = (state) => ({
+  assertions: state.playerReducer.assertions,
+  score: state.playerReducer.score,
+  gravatarEmail: state.playerReducer.gravatarEmail,
+  name: state.playerReducer.name,
+});
+
+export default connect(mapsStateToProps)(Feedback)

@@ -143,12 +143,24 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-  selectedCategory: PropTypes.func,
-  categories: PropTypes.string,
-  selectedDifficulty: PropTypes.func,
-  difficulty: PropTypes.string,
-  selectedType: PropTypes.func,
-  type: PropTypes.string
+  selectedCategory: PropTypes.arrayOf(
+    PropTypes.object,
+  ),
+  selectedDifficulty: PropTypes.arrayOf(
+    PropTypes.object,
+  ),
+  selectedType: PropTypes.arrayOf(
+    PropTypes.object,
+  ),
+  categories: PropTypes.arrayOf(
+    PropTypes.object,
+  ),
+  difficulty: PropTypes.arrayOf(
+    PropTypes.object,
+  ),
+  type: PropTypes.arrayOf(
+    PropTypes.object,
+  ),
 };
 
 const mapStateToProps = (state) => {

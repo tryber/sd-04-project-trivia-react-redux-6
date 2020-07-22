@@ -54,7 +54,6 @@ const Question = ({ question, timer, isActive }) => (
 );
 
 function Game({ name, gravatarEmail, assertions, score, questions, setPlayer }) {
-
   const [questionOnScreen, setQuestionOnScreen] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [index, setIndex] = useState(() => {
@@ -131,21 +130,24 @@ function Game({ name, gravatarEmail, assertions, score, questions, setPlayer }) 
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
         setPlayer({
-          name, gravatarEmail,
+          name,
+          gravatarEmail,
           assertions: assertions + 1,
           score: score + 10 + (timer * 3),
         });
       }
       if (questionOnScreen.difficulty === 'medium') {
         setPlayer({
-          name, gravatarEmail,
+          name,
+          gravatarEmail,
           assertions: assertions + 1,
           score: score + 10 + (timer * 2),
         });
       }
       if (questionOnScreen.difficulty === 'easy') {
         setPlayer({
-          name, gravatarEmail,
+          name,
+          gravatarEmail,
           assertions: assertions + 1,
           score: score + 10 + timer,
         });
@@ -196,6 +198,12 @@ Game.propTypes = {
     PropTypes.shape({
       question: PropTypes.string,
       category: PropTypes.string,
+      name: PropTypes.string,
+      gravatarEmail: PropTypes.string,
+      questions: PropTypes.object,
+      assertions: PropTypes.number,
+      score: PropTypes.number,
+      setPlayer: PropTypes.string
     }),
   ).isRequired,
 };
@@ -229,10 +237,10 @@ const mapStateToProps = (state) => ({
   state.questionReducer.questions.response_code === 0
     ? state.questionReducer.questions.results
     : [],
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
   setPlayer: (player) => dispatch(setPlayer(player)),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

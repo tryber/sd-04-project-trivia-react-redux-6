@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import getImageUrl from '../services/gravatar';
 
 function Header({ name, score, gravatarEmail }) {
-  console.log(name)
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="row justify-content-between align-items-center w-100">

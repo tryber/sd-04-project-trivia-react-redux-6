@@ -81,7 +81,7 @@ class Home extends React.Component {
 
   handleClick(email, name) {
     const { getQuestions, set } = this.props;
-    set({ name, gravatarEmail: email, assertions: 0, score: 0 })
+    set({ name, gravatarEmail: email, assertions: 0, score: 0 });
     const token = localStorage.getItem('token');
     getQuestions(token);
     const state = { player: { name, assertions: 0, score: 0, gravatarEmail: email } };
@@ -153,6 +153,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 Home.propTypes = {
   getQuestions: PropTypes.func.isRequired,
+  set: PropTypes.func.isRequired,
 };
 
 NameInput.propTypes = {

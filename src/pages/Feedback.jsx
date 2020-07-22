@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getImageUrl from '../services/gravatar';
 import { addToRanking } from '../services/ranking';
-import { connect } from 'react-redux';
 
 function Feedback({ name, score, assertions, gravatarEmail }) {
-
   const user = { name, score, assertions, gravatarEmail };
 
   useEffect(() => {
-    const { name, score, gravatarEmail } = user;
     addToRanking(name, score, getImageUrl(gravatarEmail));
-  }, [user]);
+  }, [name, score, gravatarEmail]);
 
   const messageFeedback = (questions) => {
     if (questions >= 3) return <h1 data-testid="feedback-text">Mandou bem!</h1>;
@@ -56,6 +55,13 @@ function Feedback({ name, score, assertions, gravatarEmail }) {
   );
 }
 
+Feedback.propTypes = {
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
+};
+
 const mapsStateToProps = (state) => ({
   assertions: state.playerReducer.assertions,
   score: state.playerReducer.score,
@@ -63,4 +69,4 @@ const mapsStateToProps = (state) => ({
   name: state.playerReducer.name,
 });
 
-export default connect(mapsStateToProps)(Feedback)
+export default connect(mapsStateToProps)(Feedback);

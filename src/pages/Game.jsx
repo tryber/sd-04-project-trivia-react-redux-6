@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 import '../css/answerButtons.css';
+import { setPlayer } from '../actions';
 
 const Answers = ({ answers, handleAnswer, isActive, correctAnswer }) => (
   <div className="col">
@@ -52,16 +53,7 @@ const Question = ({ question, timer, isActive }) => (
   </div>
 );
 
-function Game(props) {
-  const { questions } = props;
-  // VÃO P STORE
-  const [player, setPlayer] = useState(() => {
-    const state = localStorage.getItem('state');
-    if (state) return JSON.parse(state).player;
-    return {};
-  });
-  // FIM
-
+function Game({ name, gravatarEmail, assertions, score, questions, set }) {
   const [questionOnScreen, setQuestionOnScreen] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [index, setIndex] = useState(() => {
@@ -91,11 +83,6 @@ function Game(props) {
 
     return array;
   };
-
-  useEffect(() => {
-    const state = { player };
-    localStorage.setItem('state', JSON.stringify(state));
-  }, [player]);
 
   useEffect(() => {
     if (questionOnScreen) {
@@ -142,24 +129,27 @@ function Game(props) {
   const handleAnswer = (e) => {
     if (e.target.innerHTML === questionOnScreen.correct_answer) {
       if (questionOnScreen.difficulty === 'hard') {
-        setPlayer({
-          ...player,
-          assertions: player.assertions + 1,
-          score: player.score + 10 + (timer * 3),
+        set({
+          name,
+          gravatarEmail,
+          assertions: assertions + 1,
+          score: score + 10 + (timer * 3),
         });
       }
       if (questionOnScreen.difficulty === 'medium') {
-        setPlayer({
-          ...player,
-          assertions: player.assertions + 1,
-          score: player.score + 10 + (timer * 2),
+        set({
+          name,
+          gravatarEmail,
+          assertions: assertions + 1,
+          score: score + 10 + (timer * 2),
         });
       }
       if (questionOnScreen.difficulty === 'easy') {
-        setPlayer({
-          ...player,
-          assertions: player.assertions + 1,
-          score: player.score + 10 + timer,
+        set({
+          name,
+          gravatarEmail,
+          assertions: assertions + 1,
+          score: score + 10 + timer,
         });
       }
     }
@@ -175,7 +165,7 @@ function Game(props) {
       <div className="row justify-content-center align-items-center">
         <div className="col">
           <div className="card">
-            <Header player={player} />
+            <Header player={{ name, gravatarEmail, score, assertions }} />
             <div className="container">
               <div className="row my-5 align-items-center">
                 <Question question={questionOnScreen} timer={timer} isActive={isActive} />
@@ -203,16 +193,12 @@ function Game(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  questions:
-    state.questionReducer.questions.response_code === 0
-      ? state.questionReducer.questions.results
-      : [],
-});
-
-export default connect(mapStateToProps)(Game);
-
 Game.propTypes = {
+  name: PropTypes.string.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
+  set: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       question: PropTypes.string,
@@ -240,3 +226,20 @@ Question.propTypes = {
 Question.defaultProps = {
   question: { question: '', category: '' },
 };
+
+const mapStateToProps = (state) => ({
+  name: state.playerReducer.name,
+  gravatarEmail: state.playerReducer.gravatarEmail,
+  assertions: state.playerReducer.assertions,
+  score: state.playerReducer.score,
+  questions:
+  state.questionReducer.questions.response_code === 0
+    ? state.questionReducer.questions.results
+    : [],
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  set: (player) => dispatch(setPlayer(player)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

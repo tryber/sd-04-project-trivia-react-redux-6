@@ -7,8 +7,14 @@ const INITIAL_STATE = {
 
 function playerReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case 'ADD_ELEMENT':
-      return [...state, action.value];
+    case 'SET_PLAYER':
+      return {
+        ...state,
+        name: action.player.name,
+        gravatarEmail: action.player.gravatarEmail,
+        assertions: action.player.assertions,
+        score: action.player.score,
+      };
     default:
       return state;
   }

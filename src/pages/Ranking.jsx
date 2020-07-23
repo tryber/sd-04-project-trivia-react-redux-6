@@ -13,6 +13,7 @@ function RankingTable(props) {
     <ul className="list-group">
       {ranking
         .sort((a, b) => b.score - a.score)
+        .slice(0, 5)
         .map((player, index) => (
           <li
             key={player.name + player.score + Math.floor(Math.random() * 100)}

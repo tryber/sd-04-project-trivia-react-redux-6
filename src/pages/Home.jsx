@@ -80,11 +80,11 @@ class Home extends React.Component {
   }
 
   handleClick(email, name) {
-    const { getQuestions, set } = this.props;
+    const { getQuestions, set, settings } = this.props;
     set({ name, gravatarEmail: email, assertions: 0, score: 0 });
     const token = localStorage.getItem('token');
-    getQuestions(token);
-    const state = { player: { name, assertions: 0, score: 0, gravatarEmail: email } };
+    getQuestions(token, settings);
+    const state = { player: { name, gravatarEmail: email } };
     localStorage.setItem('state', JSON.stringify(state));
   }
 
@@ -142,6 +142,7 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => ({
   name: state.playerReducer.name,
+  settings: state.settingsReducer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
